@@ -9,13 +9,13 @@ import random
 
 Gmax = 1000
 t = 0    #current generation
-n = 2        # number of variables
+n = 30        # number of variables
 E = 0.00000001 #Error (Epsilon), Python's precition: 0.000000000000001
 s = 10    #standard deviation
 C = 0.817    #constant of Ingo Rechenberg & Hans-Paul Schwefel
 Mu = Lambda = 200
-minValue = -65.536
-maxValue = 65.536
+minValue = -5.536
+maxValue = 5.536
 Sigma = [maxValue / 2]
 
 class guy:
@@ -30,20 +30,9 @@ def seed(n):
 #[random.random() * 65.536 * pow(-1, (i % 2)) for i in range(n)]
 
 def fitness(x):
-    #f(xi) = f(x1, x2) = 1.0 / ( 1.0/500 + 1.0 / fj(x1, x2) )
-    #fj(x1, x2) = [[(j + 1) + pow(x.g[i] - a[i][j], 6) for i in range(2)] for j in range(25)]
+    #f(x) = sum([i * pow(x.g[i], 4) for i in range(1, 31)]) + random.gauss(0, 1)
 
-    b = [-32, -16, 0, 16, 32]
-    a = [[ b[i % 5] for i in range(25)],[ b[int(i / 5)] for i in range(25)]]
-
-    fj1 = 0.0
-    for j in range(25):
-        fj = 0.0
-        for i in range(2):
-            fj += (j + 1) + pow(x.g[i] - a[i][j], 6) # min = 1 max = 8.60973225357416808118889742336 × 10^11 + 25
-            # 1/fj max = 1 min = 0.0000000000011614
-        fj1 += 1.0 / fj # sum max = 34052522467/8923714800 min
-    return 1.0 / (1.0/500.0 + fj1) #24. [2] [-32, -32], 1.99203126216
+    return sum([i * pow(x.g[i - 1], 4) for i in range(1, 31)]) + random.gauss(0, 1) #23. [30] [0, ... , 0], (-4.5, 4.5) for Gauss ??
 
 
 def mutate(x, t):
@@ -95,7 +84,7 @@ def distance(people):
 def intercourse(x1, x2):
     child1 = guy()
     child2 = guy()
-    position = random.randint(n-1, n-1)
+    position = random.randint(1, 30)
 
     #for i in range(n):
     child1.g = x1.g[0:position] + x2.g[position:n]
