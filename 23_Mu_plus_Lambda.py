@@ -21,7 +21,7 @@ Sigma = [maxValue / 2]
 class guy:
     def __init__(self):
         self.g = []
-        #self.d = []
+        self.d = []
         self.f = 0
 
 def seed(n):
