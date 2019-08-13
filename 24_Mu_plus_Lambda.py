@@ -1,5 +1,6 @@
-#!/usr/bin/env python 2.7
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
+# -*- coding: iso-8859-15 -*-
+
 from numpy import * #es para random
 import math
 import sys
@@ -33,7 +34,7 @@ def fitness(x):
     #fj(x1, x2) = [[(j + 1) + pow(x.g[i] - a[i][j], 6) for i in range(2)] for j in range(25)]
 
     b = [-32, -16, 0, 16, 32]
-    a = [[ b[i%5] for i in range(25)],[ b[i/5] for i in range(25)]]
+    a = [[ b[i % 5] for i in range(25)],[ b[int(i / 5)] for i in range(25)]]
 
     fj1 = 0.0
     for j in range(25):
@@ -61,7 +62,7 @@ def mutate(x, t):
 
 def match( x, x1, success, t):
     if fabs(x.f - x1.f)<E:
-        print "like father like son \n" #"\n Sigma:", sort(Sigma)
+        print ("like father like son \n") #"\n Sigma:", sort(Sigma)
         sys.exit(0)
     if x1.f < x.f:
         success[t % 5] = 1 #relative success
@@ -73,16 +74,16 @@ def match( x, x1, success, t):
 
 def sigma(Sigma, t, PS):
     if PS >= 1.0/5.0:
-        print "PS:", PS, "; Sigma increases:", Sigma[t-n]
+        print ("PS:", PS, "; Sigma increases:", Sigma[t-n])
         return Sigma[t-n] / C
     elif PS < 1.0/5.0:
-        print "PS:", PS, "; Sigma reduces:", Sigma[t-n]
+        print ("PS:", PS, "; Sigma reduces:", Sigma[t-n])
         return Sigma[t-n] * C
     #print t, "la sigma no cambia", PS
     #return Sigma[t-n]
 
 def printf(x, t):
-    print  "\n", x.g, "Fitness:", x.f
+    print  (x.g, "Fitness:", x.f)
 
 def distance(people):
     for i in range(Mu):
@@ -156,7 +157,7 @@ def main(t, Gmax):
     while t < Gmax:
         #people = sorted(people, key=lambda llave: llave.d)
         offspring = []
-        for i in range(Lambda/2):
+        for i in range(int(Lambda / 2)):
             x1, x2 = intercourse(seleccionRuleta(people), seleccionRuleta(people))
             x1 = mutate(x1, t)
             x2 = mutate(x2, t)
@@ -171,15 +172,15 @@ def main(t, Gmax):
         #people[Mu-1] = x1
 
         t += 1
-        print "Generation:", t
-        print "The best:",
+        print ("Generation:", t)
+        print ("The best:")
         printf(elitism, t)
-        print "The best population's child:",
+        print ("The best population's child:")
         printf(offspring[0], t)
         elitism, success = match(elitism, offspring[0], success, t)
         PS = float(sum(success)) / float(5) #relative success
         #PS = float(success)/float(t) #absolute success
-        print "Percentage of Success, success: ", PS, ",", success
+        print ("Percentage of Success, success: ", PS, ",", success)
         #print "\nSigma:", Sigma
         #printf(people[0], t)
         #people[Mu-1] = offspring[0]
@@ -189,7 +190,7 @@ def main(t, Gmax):
         else:
             Sigma.append(Sigma[t-1])
 
-        print "\n\n"
+        print ("\n\n")
         """
         for i in range(Mu):
             printf(people[i], t)
