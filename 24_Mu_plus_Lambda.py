@@ -10,7 +10,7 @@ import random
 Gmax = 1000
 t = 0    #current generation
 n = 2        # number of variables
-E = 0.00000001 #Error (Epsilon), Python's precition: 0.000000000000001
+E = 0.00000001 #Error (Epsilon), Python's precision: 0.000000000000001
 s = 10    #standard deviation
 C = 0.817    #constant of Ingo Rechenberg & Hans-Paul Schwefel
 Mu = Lambda = 200
